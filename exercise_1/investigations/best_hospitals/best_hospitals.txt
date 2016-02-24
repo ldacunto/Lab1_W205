@@ -1,0 +1,56 @@
+The best hospitals, ordered by descending score, are the following:
+- 01- METHODIST HOSPITAL (TX)
+- 02- FIRSTHEALTH MOORE REGIONAL HOSPITAL (NC)
+- 03- CAROLINAS MEDICAL CENTER/BEHAV HEALTH (NC)
+- 04- CAROLINAS MEDICAL CENTER-NORTHEAST (NC)
+- 05- NEW YORK-PRESBYTERIAN HOSPITAL (NY)
+- 06- O U MEDICAL CENTER (OK)
+- 07- MERCY HOSPITAL ST LOUIS (MO)
+- 08- HUNTSVILLE HOSPITAL (AL)
+- 09- INOVA FAIRFAX HOSPITAL (VA)
+- 10- CLEVELAND CLINIC (OH)
+
+Following the detailed data related to these hospitals:
+
+id      hospital_name                           state   weighted_score  aggregate_score    count_score     average_score   variability_score
+450388  METHODIST HOSPITAL                      TX      37.19700000004  3719.7             53              70.183018868    40.94622214402164
+340115  FIRSTHEALTH MOORE REGIONAL HOSPITAL     NC      36.56499999984  3656.5             52              70.317307692    41.0066304261314
+340113  CAROLINAS MEDICAL CENTER/BEHAV HEALTH   NC      36.2880000002   3628.8             52              69.784615385    40.78211044740547
+340001  CAROLINAS MEDICAL CENTER-NORTHEAST      NC      36.2259999998   3622.6             52              69.665384615    41.1047904966702
+330101  NEW YORK-PRESBYTERIAN HOSPITAL          NY      36.19500000012  3619.5             52              69.605769231    41.13856703247218
+370093  O U MEDICAL CENTER                      OK      36.191          3619.1             50              72.382          39.82973105608422
+260020  MERCY HOSPITAL ST LOUIS                 MO      36.08100000024  3608.1             52              69.386538462    40.554844293993526
+010039  HUNTSVILLE HOSPITAL                     AL      35.93800000024  3593.8             52              69.111538462    40.49720623719309
+490063  INOVA FAIRFAX HOSPITAL                  VA      35.90299999988  3590.3             52              69.044230769    40.29028043443241
+360180  CLEVELAND CLINIC                        OH      35.82100000002  3582.1             51              70.237254902    39.672161231500375
+
+where 
+"weighted_score" is the sum of all the available scores for each hospital times the number of procedures with NOT null scores divided by the total number or procedures.
+"aggregate_score" is the sum of all the available scores for each hospital; 
+"count_score" is the number of procedures with not NULL score for each hospital;
+"average_score" is the average of not NULL scores for each hospital;
+"variability_score" is the standard deviation of the not NULL scores for each hospital.
+
+Important note about the process: we removed from the analysis the procedures which scores are not expressed in percentages but they are related to average/median times. For example the "Median Time from ED Arrival to ED Departure for Admitted ED Patients". The point is that it is an element that deeply depends from the location of the Hospital (downtown of a big/small city, suburbs areas, countryside, etc..) and from the size of the area is serving, so using these information can bring to wrong conclusions.  
+
+
+To select the best hospitals that have the most consistently high score for a variety of procedures, I used the weighted_score ordering from the highest.
+
+For the fact there are several hospitals for which we don't have enough data (scored procedures), using only the average score to rank the hospitals brings to false conclusions.
+To show this effect, following the same query for searching the best hospital, but ordered by "average_score" from the highest.
+
+id      hospital_name                                           state   aggregate_score    count_score     average_score   variability_score
+161324  GEORGE C GRAPE COMMUNITY HOSPITAL                       IA      100                1               100             0.0
+490144  NOVANT HEALTH HAYMARKET MEDICAL CENTER                  VA      700                7               100             0.0
+241304  SANFORD MEDICAL CENTER WHEATON                          MN      100                1               100             0.0
+231300  PAUL OLIVER MEMORIAL HOSPITAL                           MI      100                1               100             0.0
+210058  UNIV OF MD REHABILITATION &  ORTHOPAEDIC INSTITUTE      MD      200                2               100             0.0
+231338  SPECTRUM HEALTH GERBER MEMORIAL                         MI      898                9               99.777777778    0.628539361054709
+501311  EAST ADAMS RURAL HOSPITAL                               WA      99                 1               99              0.0
+233300  CHILDREN'S HOSPITAL OF MICHIGAN                         MI      394                4               98.5            1.6583123951777
+053309  MILLER CHILDREN'S HOSPITAL                              CA      394                4               98.5            1.6583123951777
+053302  CHILDREN'S HOSP OF LOS ANGELES                          CA      394                4               98.5            1.5
+
+How you can see from the previous list, the average of scores is very high, close to 100, but it's related to few procedures (very often only 1).
+So we cannot consider these hospitals as the best because we don't have enough data to make this conclusion.
+

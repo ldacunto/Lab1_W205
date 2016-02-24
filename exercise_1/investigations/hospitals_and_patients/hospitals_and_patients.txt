@@ -1,0 +1,38 @@
+The hospitals with the highest score from the survey of the patients are the following:
+- 01 - MANHATTAN SURGICAL HOSPITAL LLC
+- 02 - WESTLAKE REGIONAL HOSPITAL
+- 03 - FAIRWAY MEDICAL CENTER
+- 04 - PHYSICIANS MEDICAL CENTER
+- 05 - SACRED HEART HOSPITAL ON THE GULF
+- 06 - LAFAYETTE SURGICAL SPECIALTY HOSPITAL
+- 07 - NORTHSIDE MEDICAL CENTER
+- 08 - OUACHITA COMMUNITY HOSPITAL
+- 09 - PHYSICIANS' SPECIALTY HOSPITAL
+- 10 - FAYETTE MEDICAL CENTER
+
+
+Following the detailed scores for these hospitals:
+
+hospital_name                               score
+MANHATTAN SURGICAL HOSPITAL LLC             80
+WESTLAKE REGIONAL HOSPITAL                  80
+FAIRWAY MEDICAL CENTER                      80
+PHYSICIANS MEDICAL CENTER                   80
+SACRED HEART HOSPITAL ON THE GULF           80
+LAFAYETTE SURGICAL SPECIALTY HOSPITAL       80
+NORTHSIDE MEDICAL CENTER                    80
+OUACHITA COMMUNITY HOSPITAL                 80
+PHYSICIANS' SPECIALTY HOSPITAL              80
+FAYETTE MEDICAL CENTER                      80
+
+It's interesting to mention the fact that none of these hospitals are present in the best_hospital list.
+
+To answer the question "Are average scores for hospital quality or procedural variability correlated with patient survey responses" I extracted the list of all the hospitals with the calculated score and the survey score (to use in R to find a correlation) using the following query:
+select h.id as id, su.score as survey, avg(s.score)*count(s.score)/100 as aggregate_score from scores_tbl s join hospitals_tbl h on (h.id=s.hospital_id) join surveys_results_tbl su on (su.hospital_id = h.id) where s.score is not NULL and su.score is not NULL and s.procedure_id not in ('ED_1b','ED_2b','OP_1','OP_18b','OP_20','OP_21','OP_3b','OP_5','SCIP_Inf_3') group by h.id, su.score;
+
+Using the Pearson's product-moment, the correlation is -0.4520863, negative and pretty high and the p-value < 2.2e-16, so highly statistical significant.
+It seems that the worse is the hospital, the better are the results from the survey. See file correlation.png with the plot of these data.
+This effect can be explain by the fact that the survey is designed to measure different things from the quality of the care, like the quality of communication between nurse and patients, or how clean is the hospital. It seems that the attitude of the bad hospitals is to improve the "presentation" instead of improving the real quality of the service.  
+
+
+

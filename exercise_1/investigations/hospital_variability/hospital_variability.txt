@@ -1,0 +1,38 @@
+The most variable procedure, ordered by descending variability, are the following:
+- 01 - Thrombolytic Therapy
+- 02 - Head CT Scan Results for Acute Ischemic Stroke or Hemorrhagic Stroke Patients who Received Head CT or MRI Scan Interpretation Within 45 Minutes of ED Arrival
+- 03 - Fibrinolytic Therapy Received Within 30 Minutes of ED Arrival
+- 04 - Venous Thromboembolism Warfarin Therapy Discharge Instructions
+- 05 - Venous Thromboembolism Prophylaxis
+- 06 - Stroke Education
+- 07 - Home Management Plan of Care (HMPC) Document Given to Patient/Caregiver
+- 08 - Influenza Immunization
+- 09 - Discharge Instructions
+- 10 - Evaluation of LVS Function
+
+
+Following the detailed data related to these procedures:
+
+id      name                                                                     variability_score       count_score
+STK_4   Thrombolytic Therapy                                                     21.954194561164023      874
+OP_23   Head CT Scan Results for Acute Ischemi...thin 45 Minutes of ED Arrival   21.844653491103774      959
+OP_2    Fibrinolytic Therapy Received Within 30 Minutes of ED Arrival            18.048443797995763      68
+VTE_5   Venous Thromboembolism Warfarin Therapy Discharge Instructions           16.30300466996529       2468
+VTE_1   Venous Thromboembolism Prophylaxis                                       15.257401142298388      3534
+STK_8   Stroke Education                                                         14.013262732452308      2372
+CAC_3   Home Management Plan of Care ...Caregiver                                12.71912110433212       96
+IMM_2   Influenza Immunization                                                   11.944885922069522      3739
+HF_1    Discharge Instructions                                                   11.827981182220096      2934
+HF_2    Evaluation of LVS Function                                               10.411823309201342      3781
+
+
+where 
+"variability_score" is the standard deviation of the scores for each procedure; 
+"count_score" is the number of not NULL scores for each procedure;
+
+Important note: as in the previous analysis, also in this case we removed from the procedures that are measured in time. 
+
+
+To select the most variable procedures we fixed a threashold of 30 scores not NULL for procedure, to ommit from this analysis procedures with few scores. For example "AMI_7a  Fibrinolytic Therapy Received within 30 Minutes of Hospital Arrival" has only 3 not null scores in all the dataset and cannot be used for this analysis in order to avoid false conclusions.
+
+

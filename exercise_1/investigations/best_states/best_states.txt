@@ -1,0 +1,51 @@
+The best states, ordered by descending state_score, are the following:
+- 01- NJ New Jersey
+- 02- DE Delaware
+- 03- HI Hawaii
+- 04- CT Connecticut
+- 05- FL Florida
+- 06- RI Rhode Island
+- 07- VA Virginia
+- 08- MA Massachusetts
+- 09- NY New York
+- 10- CA California
+
+Following the detailed data related to these states:
+state   state_score                     count_hospital  variability_score
+NJ      30.246399999961230769230769     65              4.240259693792624
+DE      27.94657142848                  7               7.977548654209581
+HI      27.345000000024615384615385     13              6.464735475591615
+CT      27.137774193524516129032258     31              8.760476330058012
+FL      27.000709677432204301075269     186             8.897204966553932
+RI      26.818916666685833333333333     12              7.9587591103597015
+VA      25.511164705878588235294118     85              10.000965533201542
+MA      25.401476923063538461538462     65              10.710623330421996
+NY      24.715136363640170454545455     176             10.117518124161524
+CA      24.510664705895676470588235     340             9.858766514517459
+
+where 
+"state_score" is the average of the hospital scores for each state; 
+"count_hospital" is the number of hospital in each state;
+"variability_score" is the standard deviation of the hospital scores for each state.
+
+To select the best states that have a high-quality care, I ranked the hospitals using the weighted score (average of scores in every hospital times the number of not NULL scored procedures divided by the total number of procedures) and I then evaluate the average of these scores on every state, ordering the states from the highest results. 
+
+Important note: as in the previous analysis, also in this case we removed from the procedures that are measured in time. 
+
+I decided to not use the weighted average (using the number of hospitals for each state) in order to not penalize states with few hospitals.
+To compare the results with a weighted average, following the top 10 states where the state_score is computed as avg(weighted_score) * count_hospital/4824 (4824 is the total number of hospitals) instead of the normal average of the hospitals scores.
+
+state   state_score             avg_score         count_hospital   variability_score
+CA      1.727534411277887645    24.51066470589    340              9.858766514517459
+TX      1.427736940299303483    18.86959726028    365              11.80504392196911
+FL      1.041072139303978027    27.00070967743    186              8.897204966553932
+NY      0.901713101161001244    24.71513636364    176              10.117518124161524
+PA      0.87165505804331675     24.44688372093    172              9.863818961143574
+IL      0.820056384742813018    21.85608839778    181              11.339236242654904
+OH      0.802544983416299751    22.90814792899    169              10.500578571068523
+MI      0.587225953565628109    20.67721167883    137              11.749039976577958
+GA      0.564986525705165837    20.49244360903    133              11.709522707461204
+NC      0.55562023217240257     24.36647272726    110              10.723557946458852
+
+How you can see from the previous table, the weigthed average is penalizing the states with few hospitals, so the first approach is better than this one.
+
